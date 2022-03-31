@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
 
 const initialState = {
@@ -13,6 +13,12 @@ function reducer(state, action){
     switch (action.type) {
         case 'numberAdd2':
             return {...state, number: state.number + 2}
+        case 'numberMult7':
+            return {...state, number: state.number * 7}
+        case 'numberDiv25':
+            return {...state, number: parseInt(state.number / 25)}
+        case 'numberAddN':
+            return {...state, number: state.number + parseInt(action.payload)}
         case 'login':
             return {...state, user: { name: action.payload } }
         default:
@@ -22,6 +28,7 @@ function reducer(state, action){
 
 const UseReducer = (props) => {
     const [state, dispatch] = useReducer(reducer,initialState)
+    const [number, setNumber] = useState(0)
 
     return (
         <div className="UseReducer">
@@ -45,6 +52,18 @@ const UseReducer = (props) => {
                         onClick={() => dispatch({ type: 'numberAdd2'})}
                         >+2
                     </button>
+                    <button className="btn"
+                        onClick={() => dispatch({ type: 'numberMult7'})}
+                        >*7</button>
+                    <button className="btn"
+                        onClick={() => dispatch({ type: 'numberDiv25'})}
+                        >/25</button>
+                    <div>
+                        <input type="number" className="input" value={number} onChange={e => setNumber(e.target.value)} />
+                        <button className="btn"
+                            onClick={() => dispatch({type: 'numberAddN', payload: number}) }
+                            >Adicionar</button>
+                    </div>
                 </div>
             </div>
         </div>
